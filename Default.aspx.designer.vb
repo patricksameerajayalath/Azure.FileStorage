@@ -138,4 +138,22 @@ Partial Public Class _Default
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents RenameFile As Global.System.Web.UI.WebControls.Button
+    
+    '''<summary>
+    '''DownloadFileName control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents DownloadFileName As Global.System.Web.UI.WebControls.TextBox
+    
+    '''<summary>
+    '''DownloadFile control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents DownloadFile As Global.System.Web.UI.WebControls.Button
 End Class

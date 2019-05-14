@@ -296,7 +296,7 @@ Public Class _Default
         If (selectedBlobOld.Exists()) Then
 
             Try
-            
+
                 selectedBlobNew.StartCopyFromBlob(selectedBlobOld)
                 selectedBlobOld.Delete()
 
@@ -310,9 +310,51 @@ Public Class _Default
 
             End Try
 
-        Else 
+        Else
 
             Message.Text = "File " + oldName + " doesn't exists. Content cannot be written to it."
+
+        End If
+
+    End Sub
+
+    Private Sub DownloadFile_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles DownloadFile.Click
+
+        Dim selectedFileName As String = DownloadFileName.Text
+
+        Dim blobContainer As CloudBlobContainer = GetStorageContainerReference()
+
+        '<add key="storage:directoryUploadDocs" value="upload_docs" />
+        Dim directoryUploadDocs As String = ConfigurationManager.AppSettings("storage:directoryUploadDocs")
+        Dim blobDirectoryUploadDocs As CloudBlobDirectory = blobContainer.GetDirectoryReference(directoryUploadDocs)
+        Dim blockBlobUploadDocs As CloudBlockBlob = blobContainer.GetBlockBlobReference(directoryUploadDocs)
+
+        Dim selectedBlob As CloudBlockBlob = blobDirectoryUploadDocs.GetBlockBlobReference(selectedFileName)
+
+        If (selectedBlob.Exists()) Then
+
+            Dim fileName As String = Path.GetFileName(selectedBlob.Name)
+            Dim downloadFilePath As String = "c:\users\psam0403\desktop\" + fileName
+
+            ' method 1 - DownloadToFile
+            'selectedBlob.DownloadToFile(downloadFilePath, FileMode.Create)
+
+            ' method 2 - DownloadToStream
+            Dim memoryStream As MemoryStream = New MemoryStream()
+            selectedBlob.DownloadToStream(memoryStream)
+            Dim byteArray As Byte() = memoryStream.ToArray()
+            Dim newDownloadFile As New FileStream(downloadFilePath, FileMode.Create, FileAccess.Write)
+            memoryStream.WriteTo(newDownloadFile)
+            newDownloadFile.Close()
+            memoryStream.Close()
+
+            ShowDocumentList()
+
+            Message.Text = ""
+
+        Else
+
+            Message.Text = "File " + selectedFileName + " cannot be downloaded. It doesn't exists."
 
         End If
 

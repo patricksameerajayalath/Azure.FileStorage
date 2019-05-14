@@ -68,4 +68,15 @@
     <span class="label label-default">New file name:</span>&nbsp;<asp:TextBox id="NewFileName" runat="server" Text="test123.txt" CssClass="form-control"></asp:TextBox>
     <asp:Button ID="RenameFile" runat="server" Text="Rename File" CssClass="btn"></asp:Button>
     
+    <br />
+    
+    <hr/>
+    
+    <span class="label label-primary">Download File Functionality:</span>
+    
+    <br /><br />
+
+    <span class="label label-default">File name:</span>&nbsp;<asp:TextBox id="DownloadFileName" runat="server" Text="test.txt" CssClass="form-control"></asp:TextBox>
+    <asp:Button ID="DownloadFile" runat="server" Text="Download File" CssClass="btn"></asp:Button>
+    
 </asp:Content>
