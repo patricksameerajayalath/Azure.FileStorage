@@ -340,17 +340,25 @@ Public Class _Default
             'selectedBlob.DownloadToFile(downloadFilePath, FileMode.Create)
 
             ' method 2 - DownloadToStream
-            Dim memoryStream As MemoryStream = New MemoryStream()
-            selectedBlob.DownloadToStream(memoryStream)
-            Dim byteArray As Byte() = memoryStream.ToArray()
-            Dim newDownloadFile As New FileStream(downloadFilePath, FileMode.Create, FileAccess.Write)
-            memoryStream.WriteTo(newDownloadFile)
-            newDownloadFile.Close()
-            memoryStream.Close()
+            'Dim memoryStream As MemoryStream = New MemoryStream()
+            'selectedBlob.DownloadToStream(memoryStream)
+            'Dim byteArray As Byte() = memoryStream.ToArray()
+            'Dim newDownloadFile As New FileStream(downloadFilePath, FileMode.Create, FileAccess.Write)
+            'memoryStream.WriteTo(newDownloadFile)
+            'newDownloadFile.Close()
+            'memoryStream.Close()
 
-            ShowDocumentList()
+            'ShowDocumentList()
 
-            Message.Text = ""
+            'Message.Text = ""
+
+            ' method 3 - Response.Redirect
+            Dim policy As New SharedAccessBlobPolicy
+            policy.Permissions = SharedAccessBlobPermissions.Read
+            policy.SharedAccessExpiryTime = DateTimeOffset.UtcNow.AddMinutes(20)
+
+            Dim blobUri As String = selectedBlob.Uri.ToString() + selectedBlob.GetSharedAccessSignature(policy)
+            Response.Redirect(blobUri)
 
         Else
 
